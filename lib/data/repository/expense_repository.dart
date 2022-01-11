@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:dio/dio.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:personal_expenses/data/model/expense_model.dart';
@@ -43,6 +41,23 @@ class ExpenseRepository {
       expensesList[expensesList
           .indexWhere((element) => element.id == expense.id)] = expense;
       return response.data;
+    }
+    return response.data;
+  }
+
+  Future<String> deleteExpense(expenseId) async {
+    final response = await dio.delete("$basePath/delete-expense/$expenseId");
+    if (response.statusCode == 200) {
+      expensesList.removeWhere((element) => element.id == expenseId);
+      return response.data;
+    }
+    return response.data;
+  }
+
+  Future<ExpenseModel> getExpense(expenseId) async {
+    final response = await dio.get("$basePath/expense/$expenseId");
+    if (response.statusCode == 200) {
+      return ExpenseModel.fromJson(response.data);
     }
     return response.data;
   }

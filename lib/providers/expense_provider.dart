@@ -4,16 +4,16 @@ import 'package:personal_expenses/data/repository/expense_repository.dart';
 
 class ExpenseProvider extends ChangeNotifier {
   List<ExpenseModel> expensesList = [];
-  ExpenseRepository expRepo = ExpenseRepository();
+  ExpenseRepository expensesRepository = ExpenseRepository();
   double sumOfExpenses = 0;
-  late ExpenseModel selectedExpense;
+  ExpenseModel? selectedExpense;
 
   ExpenseProvider() {
     fetchExpensesList();
   }
 
   void fetchExpensesList() async {
-    expensesList = (await expRepo.fetchExpenses())!;
+    expensesList = (await expensesRepository.fetchExpenses())!;
     sumOfExpenses = 0;
     for (var element in expensesList) {
       sumOfExpenses += element.amount;
@@ -22,12 +22,22 @@ class ExpenseProvider extends ChangeNotifier {
   }
 
   void addExpense(ExpenseModel expense) async {
-    await expRepo.addExpense(expense);
+    await expensesRepository.addExpense(expense);
     fetchExpensesList();
   }
 
   void updateExpense() async {
-    await expRepo.updateExpense(selectedExpense);
+    await expensesRepository.updateExpense(selectedExpense!);
     fetchExpensesList();
+  }
+
+  void removeExpense(expenseId) async {
+    await expensesRepository.deleteExpense(expenseId);
+    fetchExpensesList();
+  }
+
+  void getExpense(int expenseId) async {
+    selectedExpense = await expensesRepository.getExpense(expenseId);
+    notifyListeners();
   }
 }

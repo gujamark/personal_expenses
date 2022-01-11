@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:personal_expenses/data/model/expense_model.dart';
-import 'package:personal_expenses/presentation/screens/edit_expense_widget.dart';
 import 'package:personal_expenses/presentation/screens/expense_details.dart';
 import 'package:personal_expenses/providers/expense_provider.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +32,7 @@ class ExpenseWidget extends StatelessWidget {
             showModalBottomSheet(
                 context: context,
                 builder: (_) {
-                  context.read<ExpenseProvider>().selectedExpense = expense;
+                  context.read<ExpenseProvider>().getExpense(expense.id);
                   return ExpenseDetailsScreen();
                 });
           },

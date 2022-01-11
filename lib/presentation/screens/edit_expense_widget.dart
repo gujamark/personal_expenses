@@ -24,7 +24,7 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
   @override
   Widget build(BuildContext context) {
     ExpenseModel expenseToEdit =
-        context.watch<ExpenseProvider>().selectedExpense;
+        context.watch<ExpenseProvider>().selectedExpense!;
 
     DateTime date = expenseToEdit.date;
     idCont.text = expenseToEdit.id.toString();
@@ -42,7 +42,7 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
               TextFormField(
                 onChanged: (value) => context
                     .read<ExpenseProvider>()
-                    .selectedExpense
+                    .selectedExpense!
                     .id = int.parse(value),
                 controller: idCont,
                 style: const TextStyle(
@@ -65,7 +65,7 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
                 controller: amountCont,
                 onChanged: (value) => context
                     .read<ExpenseProvider>()
-                    .selectedExpense
+                    .selectedExpense!
                     .amount = num.parse(value),
                 style: const TextStyle(
                     color: Colors.black45, fontWeight: FontWeight.bold),
@@ -87,7 +87,7 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
                 controller: titleCont,
                 onChanged: (value) => context
                     .read<ExpenseProvider>()
-                    .selectedExpense
+                    .selectedExpense!
                     .expenseTitle = value,
                 style: const TextStyle(
                     color: Colors.black45, fontWeight: FontWeight.bold),
@@ -131,8 +131,10 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
                           .then((pickedDate) {
                         if (pickedDate == null) return;
                         setState(() {
-                          context.read<ExpenseProvider>().selectedExpense.date =
-                              pickedDate;
+                          context
+                              .read<ExpenseProvider>()
+                              .selectedExpense!
+                              .date = pickedDate;
                         });
                       });
                     },

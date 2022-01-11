@@ -23,12 +23,18 @@ class AuthenticationScreen extends StatelessWidget {
             const SizedBox(
               height: 40,
             ),
-            CustomButton(text: "", callback: () {}),
+            CustomButton(
+              text: "",
+              callback: () {},
+              hexColor: "#a8e3e8",
+            ),
             const SizedBox(
               height: 18,
             ),
             CustomButton(
                 text: "LOGIN",
+                hexColor: "#a8e3e8",
+                textColor: Colors.black,
                 callback: () {
                   Navigator.pushReplacement(
                       context,
